@@ -18,33 +18,33 @@ class ChatRoomUsersTableSeeder extends Seeder
         //
         DB::table('chat_room_users')->insert([
             [   
-                'chat_room_id' => '1',
-                'user_id' => '1',
-            ],
-
-            [   
-                'chat_room_id' => '1',
-                'user_id' => '2',
-            ],
-
-            [   
-                'chat_room_id' => '2',
-                'user_id' => '1',
-            ],
-
-            [   
-                'chat_room_id' => '2',
-                'user_id' => '3',
-            ],
-
-            [   
-                'chat_room_id' => '3',
-                'user_id' => '1',
-            ],
-
-            [   
-                'chat_room_id' => '3',
+                'chat_room_id' => '4',
                 'user_id' => '4',
+            ],
+
+            [   
+                'chat_room_id' => '4',
+                'user_id' => '14',
+            ],
+
+            [   
+                'chat_room_id' => '14',
+                'user_id' => '4',
+            ],
+
+            [   
+                'chat_room_id' => '14',
+                'user_id' => '24',
+            ],
+
+            [   
+                'chat_room_id' => '24',
+                'user_id' => '4',
+            ],
+
+            [   
+                'chat_room_id' => '24',
+                'user_id' => '34',
             ],
         ]);
     }
