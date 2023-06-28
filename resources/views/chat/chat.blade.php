@@ -7,8 +7,8 @@
         Chat | My Chat
     </x-slot>
     <x-header/>
-    <style>
-        .card-bordered {
+    {{-- <style>
+.card-bordered {
     border: 1px solid #ebebeb;
 }
 
@@ -347,8 +347,12 @@ button, input, optgroup, select, textarea {
 }
 
 .publiisher-button a i {
-    margin-top: 9px;
-    margin-right: 2px
+    /* margin-top: 9px;
+    margin-right: 2px; */
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .text-info {
@@ -367,19 +371,21 @@ button, input, optgroup, select, textarea {
 .text-info:hover{
     color: #FFF !important;
 }
-    </style>
+    </style> --}}
     <div class="page-content page-container ms-1 me-3" id="page-content">
         <div class="row d-flex justify-content-center m-0">
             <div class="p-0">
                 <div class="card card-bordered m-0" style="width:100% !important;">
                     <div class="card-header sticky-top" style="height:52px; width:100% !important;">
                         <h4 class="card-title">
-                            <img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:40px; width:40px;">
+                            <a href="{{ url('/chat_profile') }}">
+                                <img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:40px; width:40px;">
+                            </a>
                             <strong class="ms-3 fw-bolder" style="text-align:center; font-size:20px">{{ $receiver->name }}</strong>
                         </h4>
                     </div>
                     <div style="height:auto; overflow: auto !important;">
-                        <div id="chat-area" class="ps-container ps-theme-default ps-active-y border-start border-end" id="chat-content" style="height: calc(80vh - 70px)  !important; background-color:#f5f5f5;">
+                        <div id="chat-area" class="ps-container ps-theme-default ps-active-y border-start border-end" id="chat-content" style="height: calc(80vh - 60px)  !important; background-color:#f5f5f5;">
                             {{-- 一分以内に送られたメッセージは時間を表示せず、重ねて表示させる --}}
                             @if (!empty($messages))    
                                 @foreach ($messages as $key => $message)
@@ -394,7 +400,9 @@ button, input, optgroup, select, textarea {
                                         </div>
                                     @else
                                         <div class="media media-chat">
-                                            <img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">
+                                            <a href="{{ url('/chat_profile') }}">
+                                                <img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">
+                                            </a>
                                             <div class="media-body">
                                                 <div class="media-text">
                                                     <p>{{ $message->message }}</p>
@@ -412,9 +420,9 @@ button, input, optgroup, select, textarea {
                                 @csrf
                                 <input type="hidden" name="chat_room_id" value="{{ $chatRoomId }}">
                                 <input type="hidden" name="user_id" value="{{ $sender }}">
-                                <input class="publisher-input" type="text" name="message" placeholder="メッセージを入力..." style="width:70px;">
+                                <input class="publisher-input" id="messageInput" type="text" name="message" placeholder="メッセージを入力..." style="width:70px;">
                                 <div class="publiisher-button">
-                                    <button class="publisher-btn text-info" href="#" data-abc="true">
+                                    <button class="publisher-btn text-info" id="sendMessageButton" href="#" data-abc="true">
                                         <i class="fa fa-paper-plane"></i>
                                     </button>
                                 </div>
@@ -426,3 +434,34 @@ button, input, optgroup, select, textarea {
         </div>
     </div>
 </x-layout>
+{{-- <script>
+    // メッセージの非同期通信
+    $(document).ready(function() {
+        $('#sendMessageButton').click(function() {
+            // メッセージの入力内容を取得します
+            var message = $('#messageInput').val();
+    
+            // Ajaxリクエストを送信します
+            $.ajax({
+                url: '/message',
+                type: 'POST',
+                data: {
+                    message: message,
+                    user_id: {{ Auth::id() }}  // ログインユーザーのIDを取得するなど、適切な値を設定します
+                },
+                success: function(response) {
+                    // メッセージ送信成功時の処理を記述します
+                    console.log(response);
+    
+                    // メッセージを送信した後、表示を更新するなどの処理を行います
+                    // ここでは例としてメッセージをクリアします
+                    $('#messageInput').val('');
+                },
+                error: function(xhr, status, error) {
+                    // エラーハンドリングを行います
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    });
+</script> --}}

@@ -23,6 +23,9 @@ class MessageController extends Controller
 
         // メッセージの作成が完了した後にリダイレクトなどの処理を行います
         return redirect()->back();
+
+        // // レスポンスを返す
+        // return response()->json(['message' => $message]);
     }
 
 }

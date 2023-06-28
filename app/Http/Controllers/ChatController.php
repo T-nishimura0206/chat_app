@@ -16,22 +16,28 @@ class ChatController extends Controller
 
         // $sender = message::where('chat_room_id', $chat)->get();
         // $reciver = message::where('chat_room_id', $chat)->get();
-        $messages = message::where('chat_room_id', $chat)->get();
-        // dd($message);
+        $messages = message::where('chat_room_id', $chat)->orderBy('created_at', 'asc')->get();
+
         // 同じチャットルームに所属する他のユーザーを取得
         $otherMembers = chat_room_user::where('chat_room_id', $chat)->where('user_id', '!=', \Auth::user()->id)->first();
         $receiver = User::where('id', $otherMembers->user_id)->first();
         $sender = \Auth::user()->id;
         $chatRoomId = $chat;
 
-        // 一分以内に送られたメッセージは時間を表示せず、重ねて表示させる
-        
         if (empty($messages)) {
             return view('chat/chat', compact('receiver', 'sender', 'chatRoomId'));
         } else {
             return view('chat/chat', compact('messages', 'receiver', 'sender', 'chatRoomId'));
         }
     }
+
+    // public function getMessage($chat) {
+
+    //     $messages = message::where('chat_room_id', $chat)->orderBy('created_at', 'asc')->get();
+    //     $json = ["messages" => $messages];
+    //     return response()->json($json);
+
+    // }
 
     // /**
     //  * メッセージを送信する

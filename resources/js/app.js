@@ -49,7 +49,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // 遷移先のURLにリダイレクト
     $('.chat-item').on('click', function() {
         var chatId = $(this).data('chat-id');
-        window.location.href = '/chat/' + chatId; 
+        // window.location.href = '/chat/' + chatId; 
+        window.location.href = '/home/' + chatId; 
+    });
+
+    $('.tab_box .tab_btn').click(function() {
+        var index = $('.tab_box .tab_btn').index(this);
+        $('.tab_box .tab_btn, .tab_box .tab_panel').removeClass('active');
+        $(this).addClass('active');
+        $('.tab_box .tab_panel').eq(index).addClass('active');
     });
 
     // スクロールバーを下に固定
@@ -57,4 +65,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let chatArea = document.getElementById('chat-area'),
         chatAreaHeight = chatArea.scrollHeight;
         chatArea.scrollTop = chatAreaHeight;
-    })
+    });
+
+    
