@@ -20,7 +20,7 @@
         </style>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body id="body-pd" style="padding-top: 0px">
+<body id="body-pd" style="padding-top: 0px; padding-right:0px;">
     {{ $slot }}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
