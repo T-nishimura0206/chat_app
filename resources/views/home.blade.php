@@ -80,7 +80,7 @@
         
         <div id="chat-left">
             <dir class="card-header left-title m-0 me-2" style="width:250px;">
-                <h5 class="mx-auto mb-0">チャット</h5>
+                <h5 class="mx-auto mb-0 fw-bolder">チャット</h5>
             </dir>
             <div class="tab_box" style="width:250px">
                 <div class="btn_area" style="width:100%">
@@ -88,42 +88,6 @@
                         <div class="height-100" style="width:100%;">
                             @if (!empty($members))
                                 @foreach ($members as $member) 
-                                    <div id='chat-item' class="tab_btn chat-item card mb-0 border-top-0 border-start-0 border-end-0 rounded-0" data-chat-id="{{ $member['chat_id'] }}">
-                                        <div class="card-body">
-                                            <div class="row" style="justify-content: space-between;">
-                                                <div class="col-3 ms-3" style="max-width:60px;">
-                                                    <a href="{{ url('/chat_profile') }}">
-                                                        <img src="storage/kkrn_icon_user_2.png" alt="" style="height:42px; width:42px; background-color:#d4d4d4; border-radius:50px;">
-                                                    </a>
-                                                </div>
-                                                <div class="col-7 ms-3">
-                                                    <div class="d-flex" style="justify-content: space-between;">
-                                                        <h5 class="card-title p-0" style="border:none; font-size: 14px;">{{ $member['user']['name'] }}</h5>
-                                                        <p class="card-meta">{{  $member['latest_message']['created_at']->format('H:i') }}</p>                                                    
-                                                    </div>
-                                                    <p class="card-text" style="max-height:50px; max-width:90px; font-size: 11px; overflow:hidden; white-spece:nowrap; text-overflow: ellipsis;">{{ $member['latest_message']['message'] }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id='chat-item' class="tab_btn chat-item card mb-0 border-top-0 border-start-0 border-end-0 rounded-0" data-chat-id="{{ $member['chat_id'] }}">
-                                        <div class="card-body">
-                                            <div class="row" style="justify-content: space-between;">
-                                                <div class="col-3 ms-3" style="max-width:60px;">
-                                                    <a href="{{ url('/chat_profile') }}">
-                                                        <img src="storage/kkrn_icon_user_2.png" alt="" style="height:42px; width:42px; background-color:#d4d4d4; border-radius:50px;">
-                                                    </a>
-                                                </div>
-                                                <div class="col-7 ms-3">
-                                                    <div class="d-flex" style="justify-content: space-between;">
-                                                        <h5 class="card-title p-0" style="border:none; font-size: 14px;">{{ $member['user']['name'] }}</h5>
-                                                        <p class="card-meta">{{  $member['latest_message']['created_at']->format('H:i') }}</p>                                                    
-                                                    </div>
-                                                    <p class="card-text" style="max-height:50px; max-width:90px; font-size: 11px; overflow:hidden; white-spece:nowrap; text-overflow: ellipsis;">{{ $member['latest_message']['message'] }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div id='chat-item' class="tab_btn chat-item card mb-0 border-top-0 border-start-0 border-end-0 rounded-0" data-chat-id="{{ $member['chat_id'] }}">
                                         <div class="card-body">
                                             <div class="row" style="justify-content: space-between;">
@@ -155,25 +119,25 @@
                 <div class="row d-flex justify-content-center m-0">
                     <div class="p-0">
                         <div class="card card-bordered m-0" style="width:100% !important;">
-                            <div class="card-header sticky-top" style="height:52px; width:100% !important;">
+                            <div class="card-header sticky-top" style="height:55px; width:100% !important; background-color: var(--white-color); border:none;">
                                 <h4 class="card-title">
                                     @if (!empty($receiver))
                                     <a href="{{ url('/chat_profile') }}">
                                         <img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:40px; width:40px;">
                                     </a>
-                                        <strong class="ms-3 fw-bolder" style="text-align:center; font-size:20px">{{ $receiver->name }}</strong>
+                                        <strong class="ms-3 fw-bolder" style="text-align:center; font-size:20px;">{{ $receiver->name }}</strong>
                                     @endif
                                 </h4>
                             </div>
                             <div class="chat-area" style="height:auto;">
-                                <div id="chat-area" class="ps-container ps-theme-default ps-active-y border-start border-end" style="height: calc(80vh - 60px)  !important; background-color:#f5f5f5;">
+                                <div id="chat-area" class="ps-container ps-theme-default ps-active-y">
                                     @if (!empty($messages))    
                                         @foreach ($messages as $key => $message)
                                             @if ($message->user_id === $sender)
                                                 <div class="media media-chat media-chat-reverse p-0">
                                                     <div class="media-body" style="justify-content: flex-end;">
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
-                                                        <div class="media-text">
+                                                        <div class="media-text m-0">
                                                             <p>{{ $message->message }}</p>
                                                         </div>
                                                     </div>
@@ -184,7 +148,7 @@
                                                         <img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">
                                                     </a>
                                                     <div class="media-body">
-                                                        <div class="media-text">
+                                                        <div class="media-text m-0">
                                                             <p>{{ $message->message }}</p>
                                                         </div>
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
@@ -202,7 +166,7 @@
                                             <input type="hidden" name="chat_room_id" value="{{ $chatRoomId }}">
                                             <input type="hidden" name="user_id" value="{{ $sender }}">
                                         @endif
-                                        <input class="publisher-input" id="messageInput" type="text" name="message" placeholder="メッセージを入力..." style="width:70px;">
+                                        <input class="publisher-input" id="messageInput" type="text" name="message" placeholder="  メッセージを入力..." style="width:70px;">
                                         <div class="publiisher-button">
                                             <button class="publisher-btn text-info" id="sendMessageButton" href="#" data-abc="true">
                                                 <i class="fa fa-paper-plane"></i>
