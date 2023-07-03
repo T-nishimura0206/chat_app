@@ -22,7 +22,8 @@ a{
     text-decoration: none
 }
 .header{
-    width: 100%;
+    // width: 100%;
+    width: 50px;
     height: var(--header-height);
     position: fixed;
     top: 0;
@@ -117,7 +118,11 @@ a{
     background-color: var(--white-color)
 }
 .height-100{
-    height: calc(80vh - 5px);
+    height: calc(80vh - 10px);
+}
+
+.card {
+    background-color: var(--white-color);
 }
 
 @media screen and (min-width: 768px){
@@ -422,10 +427,11 @@ a{
     box-shadow: 0 2px 3px rgba(0,0,0,0.03);
     -webkit-transition: .5s;
     transition: .5s;
+    background-color: var(--white-color);
 }
 
 body {
-    background-color: #f9f9fa
+    background-color: var(--white-color);
 }
 
 .card-header:first-child {
@@ -499,7 +505,8 @@ h4.card-title {
     scrollbar-color: #d4aa70 #e4e4e4;
     scrollbar-width: thin;
     // border: 1px solid rgba(77,82,89,0.07) !important;
-    height: calc(80vh - 40px)  !important; 
+    height: calc(80vh - 5px)  !important; 
+    // height: 80vh !important; 
     background-color:#f5f5f5;
 }
 
@@ -567,10 +574,10 @@ h4.card-title {
     position: relative;
     padding: 6px 13px !important;
     margin: 4px 0;
-    background-color: #efefef !important;
+    background-color: #ebebeb !important;
     font-weight: 100;
     color:#484848;
-    border-radius: 20px !important;
+    border-radius: 20px 2px 14px 20px;
 }
 
 .media>* {
@@ -681,7 +688,8 @@ h4.card-title {
     -webkit-box-align: center;
     align-items: center;
     padding: 12px 20px;
-    background-color: #f9fafb;
+    // background-color: #f9fafb;
+    background-color: var(--white-color);
     border-top: 1px solid rgba(77,82,89,0.07) !important;
 }
 
@@ -790,18 +798,15 @@ button, input, optgroup, select, textarea {
 .left-content {
     // border: 1px solid #e3e3e3;
     background-color: var(--white-color);
-}
-
-.left-content:hover {
     overflow-y: auto;
 }
 
 .left-content::-webkit-scrollbar {
-    width: 20px;
+    width: 13px;
 }
 
 .left-content::-webkit-scrollbar-track {
-    background-color: #e4e4e4;
+    background-color: var(--white-color);
     border-radius: 100px;
 }
 
