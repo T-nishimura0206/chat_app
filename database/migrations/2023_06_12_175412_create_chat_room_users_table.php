@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('chat_room_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('chat_room_id')->unique()->constrained('chat_rooms')->onDelete('cascade');
-            $table->foreignId('user_id')->unique()->constrained('users')->onDelete('cascade');
+            $table->foreignId('chat_room_id')->constrained('chat_rooms')->onDelete('cascade')->unique();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unique();
         });
     }
 
