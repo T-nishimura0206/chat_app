@@ -116,7 +116,7 @@
                         <div class="height-100" style="width:100%;">
                             @if (!empty($members))
                                 @foreach ($members as $member) 
-                                    <div id='chat-item' class="tab_btn chat-item card m-0 mt-2 pb-0 border-top-0 border-start-0 border-end-0 rounded-0" data-chat-id="{{ $member['chat_id'] }}" style="height:60px; overflow:hidden;">
+                                    <div id='chat-item' class="tab_btn chat-item card m-0 pb-0 border-top-0 border-start-0 border-end-0 rounded-0" data-chat-id="{{ $member['chat_id'] }}" style="height:60px; overflow:hidden;">
                                         <div class="card-body" style="display: contents; max-height:10px;">
                                             <div class="row" style="justify-content: space-between;">
                                                 <div class="col-3 ms-3 pt-3" style="max-width:60px;">
