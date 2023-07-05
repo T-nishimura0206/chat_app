@@ -507,7 +507,7 @@ h4.card-title {
     // border: 1px solid rgba(77,82,89,0.07) !important;
     height: calc(80vh - 5px)  !important; 
     // height: 80vh !important; 
-    background-color:#f5f5f5;
+    background-color:#efefef;
 }
 
 .ps-container::-webkit-scrollbar {
@@ -585,8 +585,12 @@ h4.card-title {
 }
 
 .media-chat .media-body p.meta {
+    display: flex;
+    align-items: flex-end;
+    font-size: 12.5px;
     background-color: transparent !important;
     color: #484848 !important;
+    margin-top:17px;
     padding: 0;
     opacity: .8;
 }
