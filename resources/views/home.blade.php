@@ -119,12 +119,12 @@
                                     <div id='chat-item' class="tab_btn chat-item card m-0 pb-0 border-top-0 border-start-0 border-end-0 rounded-0" data-chat-id="{{ $member['chat_id'] }}" style="height:60px; overflow:hidden;">
                                         <div class="card-body" style="display: contents; max-height:10px;">
                                             <div class="row" style="justify-content: space-between;">
-                                                <div class="col-3 ms-3 pt-3" style="max-width:60px;">
+                                                <div class="card-image col-3 mx-auto mt-3" style="max-width:60px;">
                                                     <a href="{{ url('/chat_profile') }}">
                                                         <img src="storage/kkrn_icon_user_2.png" alt="" style="height:42px; width:42px; background-color:#d4d4d4; border-radius:50px;">
                                                     </a>
                                                 </div>
-                                                <div class="col-7">
+                                                <div class="card-content col-7">
                                                     <div class="d-flex" style="justify-content: space-between;">
                                                         <h5 class="card-title pt-3 p-0" style="border:none; font-size: 14px;">{{ $member['user']['name'] }}</h5>
                                                         @if (!empty($member['latest_message']['created_at']))

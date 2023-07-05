@@ -22,9 +22,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [AuthenticatedSessionController::class, 'create']); 
-
-Route::get('/chat_rooms', [ChatRoomController::class, 'index']); 
+Route::get('/', [AuthenticatedSessionController::class, 'create']);  
 
 Route::get('/friends', [FriendListController::class, 'index']); 
 
