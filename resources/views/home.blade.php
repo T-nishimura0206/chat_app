@@ -127,7 +127,9 @@
                                                 <div class="col-7">
                                                     <div class="d-flex" style="justify-content: space-between;">
                                                         <h5 class="card-title pt-3 p-0" style="border:none; font-size: 14px;">{{ $member['user']['name'] }}</h5>
-                                                        <p class="card-meta pt-3 pe-2 me-1">{{  $member['latest_message']['created_at']->format('H:i') }}</p>                                                    
+                                                        @if (!empty($member['latest_message']['created_at']))
+                                                            <p class="card-meta pt-3 pe-2 me-1">{{  $member['latest_message']['created_at']->format('H:i') }}</p>                                                    
+                                                        @endif
                                                     </div>
                                                     <p class="card-text" style="max-height:50px; max-width:90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; white-spece:nowrap; text-overflow: ellipsis;">{{ $member['latest_message']['message'] }}</p>
                                                 </div>
