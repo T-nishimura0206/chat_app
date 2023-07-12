@@ -291,7 +291,7 @@
                         var chat_area = $('#chat-area');
                         var alreadyMessage = chat_area.find('[data-message-id="' + message.id + '"]').length;
 
-                        if (user_id !== login_user_id && !(alreadyMessage === 0)) {
+                        if (user_id !== login_user_id && (alreadyMessage === 0)) {
                             // 取得したメッセージを表示
                             var newMessage = response.messages;
                             var messageHtml = '<div class="media media-chat p-0">'
