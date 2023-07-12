@@ -33,9 +33,10 @@ Route::get('/chat_profile', [ChatProfileController::class, 'index']);
 // Route::get('/chat/{chat}', [ChatController::class, 'index']); 
 // Route::get('/chat/{chat}', [ChatController::class, 'getMessage']); 
 
-Route::get('/home', [HomeController::class, 'index']); 
-Route::get('/home/{chat}', [HomeController::class, 'getMessage']); 
-Route::post('/message', [HomeController::class, 'store'])->name('home.store'); 
+Route::get('/home', [HomeController::class, 'index'])->name('home.index'); 
+Route::get('/home/{chat}', [MessageController::class, 'getChatRoom'])->name('message.getChatRoom'); 
+Route::get('/home/{chat}/receive', [MessageController::class, 'getMessage'])->name('message.receive'); 
+Route::post('/message', [MessageController::class, 'store'])->name('message.store'); 
 
 Route::get('/new', function() {
     return view('new');

@@ -101,7 +101,8 @@
                 <h5 class="mx-auto mb-0 fw-bolder">チャット</h5>
             </dir>
 
-            {{-- <div class="d-flex mb-4 justify-content-center">
+            {{-- 検索
+            <div class="d-flex mb-4 justify-content-center">
                 <div class="search d-flex justify-content-center">
                     <input type="text" class="search-input mt-0" placeholder="search..." name="" style="width: 100px;">
                     <a href="#" class="search-icon">
@@ -121,7 +122,8 @@
                                             <div class="row" style="justify-content: space-between;">
                                                 <div class="card-image col-3 mx-auto mt-3" style="max-width:60px;">
                                                     <a href="{{ url('/chat_profile') }}">
-                                                        <img src="storage/kkrn_icon_user_2.png" alt="" style="height:42px; width:42px; background-color:#d4d4d4; border-radius:50px;">
+                                                        {{-- <img src="{{ asset('storage/app/public/image/kkrn_icon_user_1.png') }}" alt="" style="height:42px; width:42px; background-color:#d4d4d4; border-radius:50px;"> --}}
+                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" style="height:42px; width:42px; background-color:#d4d4d4; border-radius:50px;">
                                                     </a>
                                                 </div>
                                                 <div class="card-content col-7">
@@ -167,8 +169,8 @@
                                                 <div class="media media-chat media-chat-reverse p-0">
                                                     <div class="media-body" style="justify-content: flex-end;">
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
-                                                        <div class="media-text m-0">
-                                                            <p>{{ $message->message }}</p>
+                                                        <div id='message-container' class="media-text m-0">
+                                                            <p id="media-chat-reverse-message">{{ $message->message }}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -179,7 +181,7 @@
                                                     </a>
                                                     <div class="media-body">
                                                         <div class="media-text m-0">
-                                                            <p style="border-radius: 2px 20px 20px 14px;">{{ $message->message }}</p>
+                                                            <p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">{{ $message->message }}</p>
                                                         </div>
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
                                                     </div>
@@ -188,17 +190,17 @@
                                         @endforeach
                                     @endif
                                 </div>
-                                <form action="{{ route('home.store') }}" method="POST">
+                                <form id="message-form" method="POST">
                                     <div class="publisher border-light bottom-0 mx-auto" style="height:50px; width:100% !important;">
                                         <img class="avatar avatar-xs" src="../../storage/kkrn_icon_user_3.png" alt="...">
                                         @csrf
                                         @if (!empty($chatRoomId))                                            
-                                            <input type="hidden" name="chat_room_id" value="{{ $chatRoomId }}">
-                                            <input type="hidden" name="user_id" value="{{ $sender }}">
+                                            <input type="hidden" id="chat_room_id" name="chat_room_id" value="{{ $chatRoomId }}">
+                                            <input type="hidden" id="user_id" name="user_id" value="{{ $sender }}">
                                         @endif
-                                        <input class="publisher-input" id="messageInput" type="text" name="message" placeholder="  メッセージを入力..." style="width:70px;">
+                                        <input class="publisher-input" id="message-input" type="text" name="message" placeholder="   メッセージを入力..." style="width:70px;">
                                         <div class="publiisher-button">
-                                            <button class="publisher-btn text-info" id="sendMessageButton" href="#" data-abc="true">
+                                            <button class="publisher-btn text-info" id="sendMessageButton" data-abc="true">
                                                 <i class="fa fa-paper-plane"></i>
                                             </button>
                                         </div>
@@ -216,4 +218,78 @@
         </div> --}}
 
     </div>
+    <script>
+        // メッセージ送信の非同期処理
+        $('#message-form').on('submit', function(event) {
+            event.preventDefault();
+    
+            // 入力されたメッセージとチャットルームID、ユーザーIDを取得
+            var message = $('#message-input').val();
+            var chatRoomId = $('input[name="chat_room_id"]').val();
+            var userId = $('input[name="user_id"]').val();
+    
+            // Ajax リクエストを送信
+            $.ajax({
+                url: '{{ route('message.store') }}',
+                method: 'POST',
+                data: {
+                    message: message,
+                    chat_room_id: chatRoomId,
+                    user_id: userId,
+                    _token: "{{ csrf_token() }}"
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // 送信したメッセージを表示
+                    var newMessage = response.message;
+                        var messageHtml = '<div class="media media-chat media-chat-reverse p-0">' 
+                                        + '<div class="media-body" style="justify-content: flex-end;">' 
+                                        + '<p class="meta">' + newMessage.send_time + '</p>'
+                                        + '<div id="message-container" class="media-text m-0">'
+                                        + '<p id="media-chat-reverse-message">' + newMessage.message + '</p>'
+                                        + '</div>'
+                                        + '</div>'    
+                                        + '</div>'; 
+                    $('#chat-area').append(messageHtml);
+                    
+                    // フォームをクリア
+                    $('#message-input').val('');
+                },
+                error: function(xhr) {
+                    console.error(xhr);
+                }
+            });
+        });
+
+        // 定期的にメッセージを取得する非同期処理
+        setInterval(fetchMessages, 5000); // 5秒ごとにメッセージを取得
+
+        function fetchMessages() {
+            $.ajax({
+                url: '{{ url('/home/{chat}/receive') }}',
+                method: 'GET',
+                success: function(response) {
+                    // 取得したメッセージを表示
+                    var newMessage = response.message;
+                    var messageHtml = '<div class="media media-chat p-0">'
+                                        + '<a href="{{ url('/chat_profile') }}">'
+                                        + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
+                                        + '</a>' 
+                                        + '<div class="media-body">'
+                                        + '<div class="media-text m-0">'
+                                        + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
+                                        + '</div>'
+                                        + '<p class="meta">' + newMessage.send_time + '</p>'
+                                        + '</div>'
+                                        + '</div>';
+                    $('#chat-area').append(messageHtml);
+                },
+                error: function(xhr) {
+                    console.error(xhr);
+                }
+            });
+        }
+    </script>
 </x-layout>
