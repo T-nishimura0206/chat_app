@@ -171,6 +171,7 @@
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
                                                         <div id='message-container' class="media-text m-0">
                                                             <p id="media-chat-reverse-message">{{ $message->message }}</p>
+                                                            <input type="hidden" id="message-id" name="message_id" value="{{ $message->id }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -182,6 +183,7 @@
                                                     <div class="media-body">
                                                         <div class="media-text m-0">
                                                             <p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">{{ $message->message }}</p>
+                                                            <input type="hidden" id="message-id" name="message_id" value="{{ $message->id }}">
                                                         </div>
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
                                                     </div>
@@ -268,23 +270,35 @@
 
         function fetchMessages() {
             $.ajax({
-                url: '{{ url('/home/{chat}/receive') }}',
+                url: "{{ route('message.receive', ['chat' => $chatRoomId]) }}",
                 method: 'GET',
                 success: function(response) {
-                    // 取得したメッセージを表示
-                    // var newMessage = response.message;
-                    // var messageHtml = '<div class="media media-chat p-0">'
-                    //                     + '<a href="{{ url('/chat_profile') }}">'
-                    //                     + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
-                    //                     + '</a>' 
-                    //                     + '<div class="media-body">'
-                    //                     + '<div class="media-text m-0">'
-                    //                     + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
-                    //                     + '</div>'
-                    //                     + '<p class="meta">' + newMessage.send_time + '</p>'
-                    //                     + '</div>'
-                    //                     + '</div>';
-                    // $('#chat-area').append(messageHtml);
+
+                    var latestMessage = response.message;
+                    var user_id = latestMessage.user_id;
+                    var login_user_id = latestMessage.login_user_id;
+                    var message_id = latestMessage.id;
+                    var message = latestMessage.message;
+                    var send_time = latestMessage.created_at;
+                    var chat_area = $('#chat-area');
+
+                    if (user_id !== login_user_id && chat_area.find('[#message-id="' + message_id + '"]').length === 0) {
+                        // 取得したメッセージを表示
+                        var newMessage = response.message;
+                        var messageHtml = '<div class="media media-chat p-0">'
+                                            + '<a href="{{ url('/chat_profile') }}">'
+                                            + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
+                                            + '</a>' 
+                                            + '<div class="media-body">'
+                                            + '<div class="media-text m-0">'
+                                            + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
+                                            + '</div>'
+                                            + '<p class="meta">' + newMessage.send_time + '</p>'
+                                            + '<input type="hidden" id="message-id" name="message_id" value="' + message_id + '">'
+                                            + '</div>'
+                                            + '</div>';
+                        $('#chat-area').append(messageHtml);
+                    }
                     console.log(response);
                 },
                 error: function(xhr) {

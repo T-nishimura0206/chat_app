@@ -66,11 +66,22 @@ class MessageController extends Controller
      */
     public function getMessage($chat) {
 
-        $messages = message::where('chat_room_id', $chat)->orderBy('created_at', 'asc')->get();
+        // $messages = message::where('chat_room_id', $chat)->orderBy('created_at', 'asc')->get();
+        $messages = message::where('chat_room_id', $chat)->latest('created_at')->first();
+        $messages->login_user_id = \Auth::user()->id;
 
         return response()->json(['messages' => $messages]);
     }
-    
+
+    /**
+     * 最新メッセージを取得
+     */
+    // public function getMessage()
+    // {
+    //     $messages = Message::orderBy('created_at', 'asc')->get();
+
+    //     return response()->json(['messages' => $messages]);
+    // }
 
     /**
      * メッセージの保存
