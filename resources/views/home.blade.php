@@ -288,25 +288,25 @@
                         var message_id = latestMessage.id;
                         var message = latestMessage.message;
                         var send_time = latestMessage.created_at;
-                        var chat_area = $('#chat-area');
+                        var alreadyMessage = $('#chat-area').find('[#message-id="' + message_id + '"]');
     
-                        if (user_id !== login_user_id && chat_area.find('[#message-id="' + message_id + '"]').length === 0) {
+                        if (user_id !== login_user_id && !alreadyMessage) {
                             // 取得したメッセージを表示
                             console.log('response.message');
-                            // var newMessage = response.message;
-                            // var messageHtml = '<div class="media media-chat p-0">'
-                            //                     + '<a href="{{ url('/chat_profile') }}">'
-                            //                     + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
-                            //                     + '</a>' 
-                            //                     + '<div class="media-body">'
-                            //                     + '<div class="media-text m-0">'
-                            //                     + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
-                            //                     + '</div>'
-                            //                     + '<p class="meta">' + newMessage.send_time + '</p>'
-                            //                     + '<input type="hidden" id="message-id" name="message_id" value="' + message_id + '">'
-                            //                     + '</div>'
-                            //                     + '</div>';
-                            // $('#chat-area').append(messageHtml);
+                            var newMessage = response.message;
+                            var messageHtml = '<div class="media media-chat p-0">'
+                                                + '<a href="{{ url('/chat_profile') }}">'
+                                                + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
+                                                + '</a>' 
+                                                + '<div class="media-body">'
+                                                + '<div class="media-text m-0">'
+                                                + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
+                                                + '</div>'
+                                                + '<p class="meta">' + newMessage.send_time + '</p>'
+                                                + '<input type="hidden" id="message-id" name="message_id" value="' + message_id + '">'
+                                                + '</div>'
+                                                + '</div>';
+                            $('#chat-area').append(messageHtml);
                         }
                     },
                     error: function(xhr) {
