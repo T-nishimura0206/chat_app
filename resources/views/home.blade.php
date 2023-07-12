@@ -272,19 +272,20 @@
                 method: 'GET',
                 success: function(response) {
                     // 取得したメッセージを表示
-                    var newMessage = response.message;
-                    var messageHtml = '<div class="media media-chat p-0">'
-                                        + '<a href="{{ url('/chat_profile') }}">'
-                                        + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
-                                        + '</a>' 
-                                        + '<div class="media-body">'
-                                        + '<div class="media-text m-0">'
-                                        + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
-                                        + '</div>'
-                                        + '<p class="meta">' + newMessage.send_time + '</p>'
-                                        + '</div>'
-                                        + '</div>';
-                    $('#chat-area').append(messageHtml);
+                    // var newMessage = response.message;
+                    // var messageHtml = '<div class="media media-chat p-0">'
+                    //                     + '<a href="{{ url('/chat_profile') }}">'
+                    //                     + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
+                    //                     + '</a>' 
+                    //                     + '<div class="media-body">'
+                    //                     + '<div class="media-text m-0">'
+                    //                     + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
+                    //                     + '</div>'
+                    //                     + '<p class="meta">' + newMessage.send_time + '</p>'
+                    //                     + '</div>'
+                    //                     + '</div>';
+                    // $('#chat-area').append(messageHtml);
+                    console.log(response);
                 },
                 error: function(xhr) {
                     console.error(xhr);
