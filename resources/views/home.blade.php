@@ -281,19 +281,19 @@
                     url: '/home/' + chatRoomId + '/receive',
                     method: 'GET',
                     success: function(response) {
-    
-                        var latestMessage = response.message;
+                        
+                        var latestMessage = response.messages;
                         var user_id = latestMessage.user_id;
                         var login_user_id = latestMessage.login_user_id;
                         var message_id = latestMessage.id;
                         var message = latestMessage.message;
                         var send_time = latestMessage.created_at;
-                        var alreadyMessage = $('#chat-area').find('[#message-id="' + message_id + '"]');
-    
-                        if (user_id !== login_user_id && !alreadyMessage) {
+                        var chat_area = $('#chat-area');
+                        var alreadyMessage = chat_area.find('[data-message-id="' + message.id + '"]').length;
+
+                        if (user_id !== login_user_id && !(alreadyMessage === 0)) {
                             // 取得したメッセージを表示
-                            console.log('response.message');
-                            var newMessage = response.message;
+                            var newMessage = response.messages;
                             var messageHtml = '<div class="media media-chat p-0">'
                                                 + '<a href="{{ url('/chat_profile') }}">'
                                                 + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
@@ -302,7 +302,7 @@
                                                 + '<div class="media-text m-0">'
                                                 + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
                                                 + '</div>'
-                                                + '<p class="meta">' + newMessage.send_time + '</p>'
+                                                + '<p class="meta">' + send_time + '</p>'
                                                 + '<input type="hidden" id="message-id" name="message_id" value="' + message_id + '">'
                                                 + '</div>'
                                                 + '</div>';
