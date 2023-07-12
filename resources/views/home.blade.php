@@ -227,12 +227,16 @@
     
             // 入力されたメッセージとチャットルームID、ユーザーIDを取得
             var message = $('#message-input').val();
+            // メッセージが空の場合は送信しない
+            if (message.trim() === '') {
+                return;
+            }
             var chatRoomId = $('input[name="chat_room_id"]').val();
             var userId = $('input[name="user_id"]').val();
     
             // Ajax リクエストを送信
             $.ajax({
-                url: '{{ route('message.store') }}',
+                url: "{{ route('message.store') }}",
                 method: 'POST',
                 data: {
                     message: message,
@@ -266,45 +270,50 @@
         });
 
         // 定期的にメッセージを取得する非同期処理
-        setInterval(fetchMessages, 5000); // 5秒ごとにメッセージを取得
-
-        function fetchMessages() {
-            $.ajax({
-                url: "{{ route('message.receive', ['chat' => $chatRoomId]) }}",
-                method: 'GET',
-                success: function(response) {
-
-                    var latestMessage = response.message;
-                    var user_id = latestMessage.user_id;
-                    var login_user_id = latestMessage.login_user_id;
-                    var message_id = latestMessage.id;
-                    var message = latestMessage.message;
-                    var send_time = latestMessage.created_at;
-                    var chat_area = $('#chat-area');
-
-                    if (user_id !== login_user_id && chat_area.find('[#message-id="' + message_id + '"]').length === 0) {
-                        // 取得したメッセージを表示
-                        var newMessage = response.message;
-                        var messageHtml = '<div class="media media-chat p-0">'
-                                            + '<a href="{{ url('/chat_profile') }}">'
-                                            + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
-                                            + '</a>' 
-                                            + '<div class="media-body">'
-                                            + '<div class="media-text m-0">'
-                                            + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
-                                            + '</div>'
-                                            + '<p class="meta">' + newMessage.send_time + '</p>'
-                                            + '<input type="hidden" id="message-id" name="message_id" value="' + message_id + '">'
-                                            + '</div>'
-                                            + '</div>';
-                        $('#chat-area').append(messageHtml);
+        var chatRoomId = $('input[name="chat_room_id"]').val();
+        
+        if (chatRoomId) {
+            // 5秒ごとにメッセージを取得
+            setInterval(fetchMessages, 5000); 
+            
+            function fetchMessages() {
+                console.log(chatRoomId);
+                $.ajax({
+                    url: '/home/' + chatRoomId + '/receive',
+                    method: 'GET',
+                    success: function(response) {
+    
+                        var latestMessage = response.message;
+                        var user_id = latestMessage.user_id;
+                        var login_user_id = latestMessage.login_user_id;
+                        var message_id = latestMessage.id;
+                        var message = latestMessage.message;
+                        var send_time = latestMessage.created_at;
+                        var chat_area = $('#chat-area');
+    
+                        if (user_id !== login_user_id && chat_area.find('[#message-id="' + message_id + '"]').length === 0) {
+                            // 取得したメッセージを表示
+                            var newMessage = response.message;
+                            var messageHtml = '<div class="media media-chat p-0">'
+                                                + '<a href="{{ url('/chat_profile') }}">'
+                                                + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
+                                                + '</a>' 
+                                                + '<div class="media-body">'
+                                                + '<div class="media-text m-0">'
+                                                + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
+                                                + '</div>'
+                                                + '<p class="meta">' + newMessage.send_time + '</p>'
+                                                + '<input type="hidden" id="message-id" name="message_id" value="' + message_id + '">'
+                                                + '</div>'
+                                                + '</div>';
+                            $('#chat-area').append(messageHtml);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error(xhr);
                     }
-                    console.log(response);
-                },
-                error: function(xhr) {
-                    console.error(xhr);
-                }
-            });
+                });
+            }
         }
     </script>
 </x-layout>
