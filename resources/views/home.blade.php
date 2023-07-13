@@ -178,7 +178,7 @@
                                             @else
                                                 <div class="media media-chat p-0">
                                                     <a href="{{ url('/chat_profile') }}">
-                                                        <img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">
+                                                        <img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="..." style="height:26px; width:26px;">
                                                     </a>
                                                     <div class="media-body">
                                                         <div class="media-text m-0">
@@ -298,7 +298,7 @@
                             var newMessage = response.messages;
                             var messageHtml = '<div class="media media-chat p-0">'
                                                 + '<a href="{{ url('/chat_profile') }}">'
-                                                + '<img class="avatar" src="../../storage/kkrn_icon_user_2.png" alt="..." style="height:26px; width:26px;">'
+                                                + '<img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="..." style="height:26px; width:26px;">'
                                                 + '</a>' 
                                                 + '<div class="media-body">'
                                                 + '<div class="media-text m-0">'
