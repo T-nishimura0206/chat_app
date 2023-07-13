@@ -289,7 +289,7 @@
                         var message = latestMessage.message;
                         var send_time = latestMessage.created_at;
                         var chat_area = $('#chat-area');
-                        var alreadyMessage = chat_area.find('[data-message-id="' + message.id + '"]').length;
+                        var alreadyMessage = chat_area.find('[data-message-id="' + message_id + '"]').length;
 
                         if (user_id !== login_user_id && (alreadyMessage === 0)) {
                             // 取得したメッセージを表示
