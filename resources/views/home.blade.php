@@ -171,7 +171,7 @@
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
                                                         <div id='message-container' class="media-text m-0">
                                                             <p id="media-chat-reverse-message">{{ $message->message }}</p>
-                                                            <input type="hidden" id="message-id" name="message_id" value="{{ $message->id }}">
+                                                            <input type="hidden" id="message-id" data-message-id="{{ $message->id }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -183,7 +183,7 @@
                                                     <div class="media-body">
                                                         <div class="media-text m-0">
                                                             <p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">{{ $message->message }}</p>
-                                                            <input type="hidden" id="message-id" name="message_id" value="{{ $message->id }}">
+                                                            <input type="hidden" id="message-id" data-message-id="{{ $message->id }}">
                                                         </div>
                                                         <p class="meta">{{ $message->created_at->format('H:i') }}</p>
                                                     </div>
