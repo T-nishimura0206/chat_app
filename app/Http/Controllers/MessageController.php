@@ -117,7 +117,6 @@ class MessageController extends Controller
             $message->user_id = $request->input('user_id');
             $message->message = $request->input('message');
             $message->save();
-            $message->send_time = now()->format('H:i');
         }
         
         // メッセージの作成が完了した後にリダイレクトなどの処理を行います
