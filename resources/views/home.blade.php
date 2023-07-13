@@ -287,7 +287,7 @@
                         var login_user_id = latestMessage.login_user_id;
                         var message_id = latestMessage.id;
                         var message = latestMessage.message;
-                        var send_time = latestMessage.created_at;
+                        var send_time = $.datepicker.formatDate('H:i', latestMessage.created_at);
                         var chat_area = $('#chat-area');
                         var alreadyMessage = chat_area.find('[data-message-id="' + message_id + '"]').length;
 
