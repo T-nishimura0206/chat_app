@@ -216,7 +216,7 @@
         </div>
 
         {{-- <div id="chat-right">
-            
+            画像一覧
         </div> --}}
 
     </div>
