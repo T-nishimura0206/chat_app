@@ -303,7 +303,7 @@
                                                 + '<p id="media-chat-message" style="border-radius: 2px 20px 20px 14px;">' + newMessage.message + '</p>'
                                                 + '</div>'
                                                 + '<p class="meta">' + send_time + '</p>'
-                                                + '<input type="hidden" id="message-id" name="message_id" value="' + message_id + '">'
+                                                + '<input type="hidden" id="message-id" data-message-id="{{' + message_id + '}}">'
                                                 + '</div>'
                                                 + '</div>';
                             $('#chat-area').append(messageHtml);
