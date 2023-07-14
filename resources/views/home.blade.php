@@ -163,8 +163,27 @@
                             </div>
                             <div class="chat-area" style="height:auto;">
                                 <div id="chat-area" class="ps-container ps-theme-default ps-active-y">
-                                    @if (!empty($messages))    
+                                    @if (!empty($messages))
+                                    
+                                        @php
+                                            $before_date = ('0000-00-00');    
+                                        @endphp
+
                                         @foreach ($messages as $key => $message)
+
+                                        @php
+                                            $date = $message->created_at->format('Y-m-d');
+                                        @endphp
+
+                                        @if ($before_date < $date) {
+                                            <p>{{ $message->created_at->format('Y年m月d日') }}</p>
+                                        }
+                                        @endif
+                                        
+                                        @php
+                                            $before_date = $message->created_at->format('Y-m-d');
+                                        @endphp
+
                                             @if ($message->user_id === $sender)
                                                 <div class="media media-chat media-chat-reverse p-0">
                                                     <div class="media-body" style="justify-content: flex-end;">
