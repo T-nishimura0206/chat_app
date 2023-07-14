@@ -30,9 +30,6 @@ Route::get('/chat_my_profile', [ChatMyProfileController::class, 'index']);
 
 Route::get('/chat_profile', [ChatProfileController::class, 'index']); 
 
-// Route::get('/chat/{chat}', [ChatController::class, 'index']); 
-// Route::get('/chat/{chat}', [ChatController::class, 'getMessage']); 
-
 Route::get('/home', [HomeController::class, 'index'])->name('home.index'); 
 Route::get('/home/{chat}', [MessageController::class, 'getChatRoom'])->name('message.getChatRoom'); 
 Route::get('/home/{chat}/receive', [MessageController::class, 'getMessage'])->name('message.receive'); 
@@ -41,8 +38,6 @@ Route::post('/message', [MessageController::class, 'store'])->name('message.stor
 Route::get('/new', function() {
     return view('new');
 }); 
-
-// Route::post('/message', [MessageController::class, 'store'])->name('message.store'); 
 
 Route::get('/dashboard', function () {
     return view('dashboard');

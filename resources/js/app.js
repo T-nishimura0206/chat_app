@@ -66,30 +66,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
         chatAreaHeight = chatArea.scrollHeight;
         chatArea.scrollTop = chatAreaHeight;
     });
-
-    $(document).ready(function() {
-        // メッセージフォームをAjaxで送信
-        $('#sendMessageButton').click(function() {
-            var message = $('#messageInput').val();
-            var chat_room_id = $('#chat_room_id').val();
-            var user_id = $('#user_id').val();
-            
-            // サーバーにメッセージを送信
-            $.ajax({
-                url: "{{ route('home.store') }}",
-                method: "POST",
-                data: { message: message,
-                        chat_room_id: chat_room_id,
-                        user_id: user_id},
-                success: function(response) {
-                    // メッセージの送信が成功した場合、必要に応じて何か処理を実行
-                    $('#messageInput').val(''); // 入力フィールドをクリア
-                },
-                error: function(xhr) {
-                    // エラーをハンドリング
-                }
-            });
-        });
-    });
-
-    

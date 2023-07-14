@@ -14,7 +14,6 @@ class MessageController extends Controller
      * 受信者の情報や過去のメッセージを取得
      */
     public function getChatRoom($chat) {
-        
         // ログインしているユーザが所属しているチャットルームを取得
         $chatRooms = chat_room_user::where('user_id', \Auth::user()->id)->pluck('chat_room_id');
 
@@ -41,7 +40,6 @@ class MessageController extends Controller
             $members[] = $member;
         }
 
-
         $messages = message::where('chat_room_id', $chat)->orderBy('created_at', 'asc')->get();
 
         // 同じチャットルームに所属する他のユーザーを取得
@@ -65,8 +63,6 @@ class MessageController extends Controller
      * メッセージを取得
      */
     public function getMessage($chat) {
-
-        // $messages = message::where('chat_room_id', $chat)->orderBy('created_at', 'asc')->get();
         $messages = message::where('chat_room_id', $chat)->latest('created_at')->first();
         $messages->login_user_id = \Auth::user()->id;
 
@@ -74,42 +70,10 @@ class MessageController extends Controller
     }
 
     /**
-     * 最新メッセージを取得
-     */
-    // public function getMessage()
-    // {
-    //     $messages = Message::orderBy('created_at', 'asc')->get();
-
-    //     return response()->json(['messages' => $messages]);
-    // }
-
-    /**
      * メッセージの保存
      */
     public function store(Request $request) {
         // バリデーションなどの処理を追加する場合はここで行います
-        
-        // メッセージを作成
-        // if (!is_null($request->input('chat_room_id')) && !is_null($request->input('user_id')) && !is_null($request->input('message'))) {
-        //     $message = new message();
-        //     $message->chat_room_id = $request->input('chat_room_id');
-        //     $message->user_id = $request->input('user_id');
-        //     $message->message = $request->input('message');
-        //     $message->save();
-        // }
-
-        // $validatedData = $request->validate([
-        //     'message' => 'required|string',
-        //     'chat_room_id' => 'required',
-        //     'user_id' => 'required',
-        // ]);
-        
-        // $message = Message::create([
-        //     'message' => $request->message,
-        //     'chat_room_id' => $request->chat_room_id,
-        //     'user_id' => $request->user_id,
-        // ]);
-
         // メッセージを作成
         if (!is_null($request->input('chat_room_id')) && !is_null($request->input('user_id')) && !is_null($request->input('message'))) {
             $message = new message();
@@ -119,12 +83,6 @@ class MessageController extends Controller
             $message->save();
             $message->send_time = now()->format('H:i');
         }
-        
-        // メッセージの作成が完了した後にリダイレクトなどの処理を行います
-
-        // return redirect()->back();
-
-        // dd($request);
 
         // レスポンスを返す
         return response()->json(['message' => $message]);
